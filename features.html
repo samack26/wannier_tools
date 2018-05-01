@@ -64,6 +64,7 @@
 <li><a class="reference internal" href="#spintexturecalculation"><span class="std std-ref">Spin texture calculation</span></a></li>
 <li><a class="reference internal" href="#berryphasecalculation"><span class="std std-ref">Berry phase calculation</span></a></li>
 <li><a class="reference internal" href="#berrycurvcalculation"><span class="std std-ref">Berry curvature calculation</span></a></li>
+<li><a class="reference internal" href="#ahccalculation"><span class="std std-ref">Anomalous Hall conductivity (AHC)</span></a></li>
 <li><a class="reference internal" href="#wanniercentercalculation"><span class="std std-ref">Wannier charge center/Wilson loop calculation</span></a></li>
 <li><a class="reference internal" href="#z2bulkcalculation"><span class="std std-ref">Z2 number for 3D bulk materials</span></a></li>
 <li><a class="reference internal" href="#chernbulkcalculation"><span class="std std-ref">Chern number for 3D bulk materials</span></a></li>
@@ -696,8 +697,34 @@ or one.</p>
 <p>Calculate Berry curvature at a fixed k plane in 3D BZ. Set BerryCurvature_calc=T, and  set Nk1, Nk2, in NAMELISTS PARAMETERS, set k plane in KPLANE_BULK CARD. Get the plot with  “gnuplot Berrycurvature.gnu”.</p>
 <p>please set NumOccpuied correctly. It represents the “occpuied” wannier bands, not the total number of electrons. In this application, the Berrycurvature is the summation over NumOccupied bands.</p>
 </div>
+<div class="section" id="anomalous-hall-conductivity-ahc">
+<span id="ahccalculation"></span><h2>1.3.17. Anomalous Hall conductivity (AHC)<a class="headerlink" href="#anomalous-hall-conductivity-ahc" title="Permalink to this headline">¶</a></h2>
+<p>Calculate AHC in the energy range [OmegaMin, OmegaMax]. AHC is in unit of (Ohm*cm)^-1.</p>
+<p>Relevant inputs are</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>&amp;CONTROL
+AHC_calc=T
+/
+
+&amp;PARAMETERS
+OmegaNum = 601    ! number of slices of energy
+OmegaMin = -1.0   ! erergy range for AHC
+OmegaMax =  1.0
+Nk1 = 51   ! No. of slices for the 1st reciprocal vector
+Nk2 = 51   ! No. of slices for the 2nd reciprocal vector
+Nk3 = 51   ! No. of slices for the 3nd reciprocal vector
+/
+
+KCUBE_BULK
+  0.00  0.00  0.00   ! Original point for 3D k plane
+  1.00  0.00  0.00   ! The first vector to define 3d k space plane
+  0.00  1.00  0.00   ! The second vector to define 3d k space plane
+  0.00  0.00  1.00   ! The third vector to define 3d k cube
+</pre></div>
+</div>
+<p>Output is <strong>sigma_ahe.txt</strong>.</p>
+</div>
 <div class="section" id="wannier-charge-center-wilson-loop-calculation">
-<span id="wanniercentercalculation"></span><h2>1.3.17. Wannier charge center/Wilson loop calculation<a class="headerlink" href="#wannier-charge-center-wilson-loop-calculation" title="Permalink to this headline">¶</a></h2>
+<span id="wanniercentercalculation"></span><h2>1.3.18. Wannier charge center/Wilson loop calculation<a class="headerlink" href="#wannier-charge-center-wilson-loop-calculation" title="Permalink to this headline">¶</a></h2>
 <p>Wannier charge center, which is sometimes called Wilson loop can be calculated by set WannierCenter_calc=T and set KPLANE_BULK CARD,  set number of k points for two vectors is Nk1, Nk2 in NAMELISTS PARAMETERS.  Notice: You should notice that the first vector in KPLANE_BULK CARD is the integration direction, this vector should be equal to one primitive reciprocal lattice vector.  If you want to calculate the Z2 number, Please set the second vector to be half of the reciprocal lattice vector. You can get the Wannier charge center  along the second k line. See more details In the paper written by Alexey. Soluyanov (2011).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -749,7 +776,7 @@ plane to characterize the topology.</p>
 </div>
 </div>
 <div class="section" id="z2-number-for-3d-bulk-materials">
-<span id="z2bulkcalculation"></span><h2>1.3.18. Z2 number for 3D bulk materials<a class="headerlink" href="#z2-number-for-3d-bulk-materials" title="Permalink to this headline">¶</a></h2>
+<span id="z2bulkcalculation"></span><h2>1.3.19. Z2 number for 3D bulk materials<a class="headerlink" href="#z2-number-for-3d-bulk-materials" title="Permalink to this headline">¶</a></h2>
 <p>We can get Z2 topological index (v0, v1v2v3) from the z2 calculations of six time reversal invariant planes, i.e. (a) k1=0.0; (b) k1=0.5; (c) k2=0.0; (d) k2=0.5; (e) k3=0.0; (f) k3=0.5;
 Usually, you can call “Wannier charge center calculation for a plane” six times. Here we packed them up to get another function. You can set the input file like the following.</p>
 <div class="section" id="id25">
@@ -787,7 +814,7 @@ then set NumOccupied=8.</p>
 </div>
 </div>
 <div class="section" id="chern-number-for-3d-bulk-materials">
-<span id="chernbulkcalculation"></span><h2>1.3.19. Chern number for 3D bulk materials<a class="headerlink" href="#chern-number-for-3d-bulk-materials" title="Permalink to this headline">¶</a></h2>
+<span id="chernbulkcalculation"></span><h2>1.3.20. Chern number for 3D bulk materials<a class="headerlink" href="#chern-number-for-3d-bulk-materials" title="Permalink to this headline">¶</a></h2>
 <p>We can get Chern number of six k planes, i.e. k1=0.0; k1=0.5; k2=0.0; k2=0.5; k3=0.0; k3=0.5; where k1, k2, k3 is in fractional units.
 Usually, you can call “Wannier charge center calculation for a plane”  six times. Here we packed them up to get another function. You can set the input file like the following.</p>
 <p>Basically, the method used here is very similar to the one used in the Z2 number calculations. We also use the Wilson loop method. However, for Z2 calculation,
@@ -834,7 +861,7 @@ then set NumOccupied=8.</p>
 </div>
 </div>
 <div class="section" id="landau-level-calculations">
-<span id="landaulevel"></span><h2>1.3.20. Landau level calculations<a class="headerlink" href="#landau-level-calculations" title="Permalink to this headline">¶</a></h2>
+<span id="landaulevel"></span><h2>1.3.21. Landau level calculations<a class="headerlink" href="#landau-level-calculations" title="Permalink to this headline">¶</a></h2>
 <p><strong>This functionality is under testing, not released yet. Developed by QSWu and YFGuan</strong></p>
 <p>By applying the uniform magnetic field along one lattice vector, the Landau level spectrum can be calculated by the Peierls substitution.</p>
 <p>Here we put one example of Graphene. The input file wt.in is like this</p>
@@ -997,22 +1024,23 @@ will call the sparse matrix solver.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#berry-curvature-calculation">1.3.16. Berry curvature calculation</a></li>
-<li><a class="reference internal" href="#wannier-charge-center-wilson-loop-calculation">1.3.17. Wannier charge center/Wilson loop calculation</a><ul>
+<li><a class="reference internal" href="#anomalous-hall-conductivity-ahc">1.3.17. Anomalous Hall conductivity (AHC)</a></li>
+<li><a class="reference internal" href="#wannier-charge-center-wilson-loop-calculation">1.3.18. Wannier charge center/Wilson loop calculation</a><ul>
 <li><a class="reference internal" href="#id24">Output</a></li>
 <li><a class="reference internal" href="#example">Example</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#z2-number-for-3d-bulk-materials">1.3.18. Z2 number for 3D bulk materials</a><ul>
+<li><a class="reference internal" href="#z2-number-for-3d-bulk-materials">1.3.19. Z2 number for 3D bulk materials</a><ul>
 <li><a class="reference internal" href="#id25">Input</a></li>
 <li><a class="reference internal" href="#id26">Output</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#chern-number-for-3d-bulk-materials">1.3.19. Chern number for 3D bulk materials</a><ul>
+<li><a class="reference internal" href="#chern-number-for-3d-bulk-materials">1.3.20. Chern number for 3D bulk materials</a><ul>
 <li><a class="reference internal" href="#id27">Input</a></li>
 <li><a class="reference internal" href="#id28">Output</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#landau-level-calculations">1.3.20. Landau level calculations</a></li>
+<li><a class="reference internal" href="#landau-level-calculations">1.3.21. Landau level calculations</a></li>
 </ul>
 </li>
 </ul>

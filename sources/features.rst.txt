@@ -15,6 +15,7 @@ Capabilities of WannierTools
 -  :ref:`spintexturecalculation`
 -  :ref:`berryphasecalculation`
 -  :ref:`berrycurvcalculation`
+-  :ref:`ahccalculation`
 -  :ref:`wanniercentercalculation`
 -  :ref:`z2bulkcalculation`
 -  :ref:`chernbulkcalculation`
@@ -726,10 +727,42 @@ The value of Berry phase can be found in the **WT.out**.
 
 Berry curvature calculation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Calculate Berry curvature at a fixed k plane in 3D BZ. Set BerryCurvature_calc=T, and  set Nk1, Nk2, in NAMELISTS PARAMETERS, set k plane in KPLANE_BULK CARD. Get the plot with  "gnuplot Berrycurvature.gnu”.
 
 please set NumOccpuied correctly. It represents the “occpuied” wannier bands, not the total number of electrons. In this application, the Berrycurvature is the summation over NumOccupied bands. 
 
+
+.. _ahccalculation:
+
+Anomalous Hall conductivity (AHC)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Calculate AHC in the energy range [OmegaMin, OmegaMax]. AHC is in unit of (Ohm*cm)^-1.
+
+Relevant inputs are ::
+
+   &CONTROL
+   AHC_calc=T 
+   /
+
+   &PARAMETERS
+   OmegaNum = 601    ! number of slices of energy
+   OmegaMin = -1.0   ! erergy range for AHC
+   OmegaMax =  1.0
+   Nk1 = 51   ! No. of slices for the 1st reciprocal vector
+   Nk2 = 51   ! No. of slices for the 2nd reciprocal vector
+   Nk3 = 51   ! No. of slices for the 3nd reciprocal vector
+   /
+
+   KCUBE_BULK
+     0.00  0.00  0.00   ! Original point for 3D k plane 
+     1.00  0.00  0.00   ! The first vector to define 3d k space plane
+     0.00  1.00  0.00   ! The second vector to define 3d k space plane
+     0.00  0.00  1.00   ! The third vector to define 3d k cube
+ 
+
+Output is **sigma_ahe.txt**.
 
 .. _wanniercentercalculation:
 
