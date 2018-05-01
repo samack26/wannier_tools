@@ -66,6 +66,7 @@ and  <a class="reference internal" href="#wannier90-dat"><span class="std std-re
 <li><a class="reference internal" href="#projectors"><span class="std std-ref">PROJECTORS</span></a></li>
 <li><a class="reference internal" href="#surface"><span class="std std-ref">SURFACE</span></a></li>
 <li><a class="reference internal" href="#kpathbulk"><span class="std std-ref">KPATH_BULK</span></a></li>
+<li><a class="reference internal" href="#kpoints3d"><span class="std std-ref">KPOINTS_3D</span></a></li>
 <li><a class="reference internal" href="#kpathslab"><span class="std std-ref">KPATH_SLAB</span></a></li>
 <li><a class="reference internal" href="#kplane-slab"><span class="std std-ref">KPLANE_SLAB</span></a></li>
 <li><a class="reference internal" href="#kplane-bulk"><span class="std std-ref">KPLANE_BULK</span></a></li>
@@ -628,6 +629,21 @@ G 0.00000 0.00000 0.0000 L 0.50000 0.00000 0.0000
 </div>
 <p>These k points are in unit of the reciprocal lattice constant built by the lattice vector LATTICE CARD. The number of k points is Nk1, which is set in NAMELISTS PARAMETERS. There are no default values for this CARD. So you must set some value in the input file when choosing BulkBand_calc=T.</p>
 </div>
+<div class="section" id="kpoints-3d">
+<span id="kpoints3d"></span><h4>KPOINTS_3D<a class="headerlink" href="#kpoints-3d" title="Permalink to this headline">¶</a></h4>
+<p>You can calculate the properties on some kpoints you specified in point mode. e.g. the energy bands</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>KPOINTS_3D
+4              ! number of k points
+Direct         ! Direct or Cartesian
+0.00000 0.00000 0.0000
+0.00000 0.00000 0.5000
+0.50000 0.50000 0.0000
+0.00000 0.00000 0.0000
+</pre></div>
+</div>
+<p>The number of lines below “Direct” should be the same as the number above “Direct”. You could add comments at the end of each line. But you
+can’t add additional comment lines between the formatted lines.</p>
+</div>
 <div class="section" id="kpath-slab">
 <span id="kpathslab"></span><h4>KPATH_SLAB<a class="headerlink" href="#kpath-slab" title="Permalink to this headline">¶</a></h4>
 <p>This is the k path for slab system.</p>
@@ -848,6 +864,7 @@ The 4th and 5th column are the band index (Row first). The 6th and 7th are compl
 <li><a class="reference internal" href="#miller-indices-card">MILLER_INDICES CARD</a></li>
 <li><a class="reference internal" href="#surface-card">SURFACE CARD</a></li>
 <li><a class="reference internal" href="#kpath-bulk">KPATH_BULK</a></li>
+<li><a class="reference internal" href="#kpoints-3d">KPOINTS_3D</a></li>
 <li><a class="reference internal" href="#kpath-slab">KPATH_SLAB</a></li>
 <li><a class="reference internal" href="#kplane-slab">KPLANE_SLAB</a></li>
 <li><a class="reference internal" href="#kplane-bulk">KPLANE_BULK</a></li>

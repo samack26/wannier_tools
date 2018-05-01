@@ -23,11 +23,36 @@ Capabilities of WannierTools
 
 .. _bulkbandcalculation:
 
-Bulk band calculation (line mode and plane mode)
-------------------------------------------------
+Bulk band calculation (points mode, line mode and plane mode)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Points mode
+--------------
+You can calculate the energy bands with the given k points in the KPOINTS_3D :ref:`kpoints3d` card.
+
+Input
+>>>>>
+Typical flags for this mode in the wt.in. ::
+
+  &CONTROL
+  BulkBand_points_calc = T
+  /
+  
+  KPOINTS_3D            
+  4              ! number of k points
+  Direct         ! Direct or Cartesian
+  0.00000 0.00000 0.0000  
+  0.00000 0.00000 0.5000
+  0.50000 0.50000 0.0000
+  0.00000 0.00000 0.0000
+
+Output
+>>>>>>
+
+The outputs for this mode is **bulkek-pointsmode.dat**
 
 Line mode
-^^^^^^^^^
+------------
 
 Calculate bulk energy band for a series k lines. This is the basic calculation after the
 construction of Wannier functions. You have to compare your Wannier interpolated bands 
@@ -86,7 +111,7 @@ The subrotine for this feature is ek_bulk.f90 .
 
 
 Plane mode
-^^^^^^^^^^
+--------------
 
 Calculate band structure in a k slice(plane) specified by KPLANE_BULK card.
 The mode is very useful to visualize the Dirac/Weyl cone. You have to set the following tags in **wt.in** ::
@@ -133,11 +158,11 @@ Usually, I choose column 4th and 5th as k coordinates and choose 8 and 9 as ener
 .. _bulkfscalculation:
 
 BulkFS calculation
-------------------
+^^^^^^^^^^^^^^^^^^^^^^
 Bulk Fermi surface calculation. 
 
 Input
-^^^^^
+-------
 
 You should specify the number of k points for each three reciprocal vectors Nk1, Nk2, Nk3 
 in NAMELISTS PARAMETERS ::
@@ -160,7 +185,7 @@ in NAMELISTS PARAMETERS ::
 See :ref:`controlnamelist`, :ref:`parametersnamelist`
 
 Output
-^^^^^^
+---------
 
 The outputs for this function are **FS3D.bxsf**. 
 You can plot the FS with `xcrysden <http://www.xcrysden.org>`_  run ::
@@ -175,12 +200,12 @@ By the way, Bulk band and BulkFS calculations were already implemented in Wannie
 .. _bulkfsplanecalculation:
 
 BulkFS plane calculation
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Bulk Fermi surface in a fixed k plane specified by KPLANE_BULK 
 
 Input
-^^^^^
+--------
 
 You should specify the number of k points for each three reciprocal vectors Nk1, Nk2
 in NAMELISTS PARAMETERS ::
@@ -201,7 +226,7 @@ in NAMELISTS PARAMETERS ::
 See :ref:`controlnamelist`, :ref:`parametersnamelist`
 
 Output
-^^^^^^
+---------
 
 The outputs for this function are **fs.gnu, fs.png**. 
 
@@ -212,7 +237,7 @@ to get the plot.
 .. _doscalculation:
 
 Density state(DOS) calculations
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Calculation density of state for the bulk system. The typical setup in **wt.in**::
 
@@ -243,19 +268,19 @@ Outputs are **dos.dat** and **dos.gnu**. **dos.eps** will be obtained with ::
 .. _energygapcalculation:
 
 Energy gap calculations (plane and cube mode)
----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We support two modes for energy gap calculations.The formula is 
 :math:`gap(k)= E_{NumOccupied+1}(k)- E_{NumOccpuied}(k)`
 
 Gap_plane mode
-^^^^^^^^^^^^^^
+-----------------
 
 Calculate the energy gap for the k points in the KPLANE_BULK. 
 This is useful to show Weyl points and nodal line structure.
 
 Input 
->>>>>
+>>>>>>>>
 
 Typical input parameters for BulkGap_plane calculation ::
 
@@ -295,12 +320,12 @@ The head of **GapPlane.dat** ::
 
 
 Gap_Cube mode
-^^^^^^^^^^^^^^
+-----------------
 
 This helps us to find Weyl points and nodal line structure in the 3D BZ. 
 
 Input
-""""""
+>>>>>>
 
 Typical input parameters for BulkGap_cube calculation ::
 
@@ -322,7 +347,7 @@ Typical input parameters for BulkGap_cube calculation ::
 See :ref:`controlnamelist`, :ref:`parametersnamelist`, :ref:`kcubebulk`
 
 Output
-""""""
+>>>>>>>
 
 The outputs for Gap_plane mode are **GapCube.dat**, **GapCube.gnu**. The **GapCube.png** will get by ::
    
@@ -343,14 +368,14 @@ The head of **GapCube.dat** are ::
 .. _findnodescalculation:
 
 Find Nodes calculation
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Beside by using GapCube and GapPlane to find Weyl/Dirac nodes or node lines, we can directly
 using FindNodes function. 
 :math:`gap(k)= E_{NumOccupied+1}(k)- E_{NumOccpuied}(k)`
 
 Input
-^^^^^
+--------
 
 Typical input parameters for FindNodes_cube calculation ::
 
@@ -375,7 +400,7 @@ Typical input parameters for FindNodes_cube calculation ::
    Please don't set Nk1, Nk2, Nk3 too large. Otherwise, it will become very time consuming. Usually, 15*15*15 is enough to get converged number of Weyl/Dirac points.
 
 Output
-^^^^^^
+---------
    
 Outputs are **Nodes.dat** and **Nodes.gnu**. Nodes.png will be obtained by ::
    
@@ -399,14 +424,14 @@ You will find that there are 8 Weyl points in the BZ as expected.
 .. _weylchiralitycalculation:
 
 Weyl Chirality calculation
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 After you identify the positions of Weyl points, you could use this function to calculate the chirality, 
 which tells you whether a Weyl point is a sink or a source of the Berry Curvature. 
 
 
 Input
-^^^^^
+--------
 
 Typical input parameters for WeylChirality_calc calculation ::
 
@@ -432,7 +457,7 @@ Typical input parameters for WeylChirality_calc calculation ::
    0.220181    0.038941    0.000000   
 
 Output
-""""""
+---------
    
 Outputs are **wanniercenter3D_Weyl.dat** and **wanniercenter3D_Weyl_i.gnu**. wanniercenter3D_Weyl.png will be obtained by ::
   
@@ -459,7 +484,7 @@ show the Wannier charge center phase. In total, there are Num_weyls columns.
 .. _slabbandcalculation:
 
 Slab band calculation
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Before using iterative green’s function to get the surface state spectrum for semi-infinite system. 
 We also can just construct a finite thickness slab system and
@@ -471,7 +496,8 @@ calculate the band structure for it.
 
 
 Input
-^^^^^
+--------
+
 ::
  
   &CONTROL
@@ -491,7 +517,8 @@ Input
 See :ref:`controlnamelist`, :ref:`systemnamelist` :ref:`parametersnamelist`, :ref:`kpathslab`
 
 Output
-^^^^^^
+---------
+
 Outputs are **slabek.dat** and **slabek.gnu** 
 
 The heads of **slabek.dat** are ::
@@ -514,11 +541,12 @@ The colorfull plot **slabek.png** of the slab energy bands can be obtained by ::
 .. _ribbonbandcalculation:
 
 Nanowire/nanoribbon  band calculation
--------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Band calculation for wire system. Only one direction is periodic, the other two directions are confined.
 
 Input
-^^^^^
+-------
 
 You don't have to set the k path, because it only has one direction. ::
 
@@ -536,7 +564,7 @@ You don't have to set the k path, because it only has one direction. ::
 See :ref:`controlnamelist`, :ref:`systemnamelist` :ref:`parametersnamelist`
 
 Output
-^^^^^^
+---------
 
 Outputs are **ribbonek.dat** and **ribbonek.gnu**. The data format of **ribbonek.dat** is the same as
 **slabek.dat**. Get plot ribbonek.png with ::
@@ -547,7 +575,7 @@ Outputs are **ribbonek.dat** and **ribbonek.gnu**. The data format of **ribbonek
 .. _sscalculation:
 
 Surface state ARPES calculation
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 One important feature for topological materials is the surface state. The bulk-edge correspondence 
 tells us, if the topological property of the bulk system is nontrivial, then there will be
@@ -560,7 +588,7 @@ obtained by the iterative Green's function.
  For slab calculations, please read carefully the input card :ref:`surface`
 
 Input
-^^^^^
+-------
 ::
  
   &CONTROL
@@ -584,7 +612,8 @@ NP : integer valued, Number of principle layers, see details related to iterativ
 Used if  SlabSS_calc= T, SlabArc_calc=T, SlabSpintexture_calc=T. Default value is 2. You need to do a convergence test by setting Np= 1, Np=2, Np=3, and check the surface state spectrum. Basically, the value of Np depends on the spread of Wannier functions you constructed. One thing should be mentioned is that the computational time grows cubically of Np. 
 
 Output
-^^^^^^
+---------
+
 The output files are **surfdos_l.dat**, **surfdos_r.dat**, **surfdos_l.gnu**, **surfdos_r.gnu**. You could get the the spectral function
 plots with ::
    
@@ -596,7 +625,7 @@ plots with ::
 .. _ssqpicalculation:
 
 Surface state QPI calculation
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Settings for this feature are almost the same as :ref:`fermiarccalculation`. Only difference is that 
 you should set  ::
@@ -606,7 +635,7 @@ you should set  ::
    /
    
 Output
-^^^^^^
+--------
 
 There are a lot of outputs for QPI calculation. including 
  arc.dat_l, arc.dat_r,     
@@ -624,7 +653,7 @@ There are a lot of outputs for QPI calculation. including
 .. _fermiarccalculation:
 
 Fermi arc calculation
----------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 Surface state spectrum at fixed energy level E_arc set in NAMELISTS PARAMETERS . Set SlabArc_calc=T, 
 and  set Nk1, Nk2, in NAMELISTS PARAMETERS, set k plane in KPLANE_SLAB CARD. 
 Get the plots with  "gnuplot arc_l.gnu”, "gnuplot arc_r.gnu”. **_l** and **_r** means the top and bottom surface.
@@ -632,7 +661,7 @@ Get the plots with  "gnuplot arc_l.gnu”, "gnuplot arc_r.gnu”. **_l** and **_
 .. _spintexturecalculation:
 
 Spin texture calculation
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Spin texture calculation at fixed energy level E_arc set in NAMELISTS PARAMETERS . 
 Set Slabspintexture_calc=T, and  set Nk1, Nk2, in NAMELISTS PARAMETERS, set k plane in KPLANE_SLAB CARD. 
 Get the plots with  "gnuplot spintext_l.gnu”, "gnuplot spintext_r.gnu”.
@@ -641,7 +670,7 @@ Get the plots with  "gnuplot spintext_l.gnu”, "gnuplot spintext_r.gnu”.
 .. _berryphasecalculation:
 
 Berry phase calculation
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Calculate Berry phase of a closed k path in 3D BZ. This is useful in a nodal line system. It is demonstrated that
 the Berry phase around a closed mirror symmetric k loop is either 0 or pi for a mirror protect nodal line system. 
@@ -679,7 +708,9 @@ Input
    0.3    0.333  -0.2
 
 Output
-^^^^^^
+------
+
+
 The value of Berry phase can be found in the **WT.out**.
 
 .. NOTE::
@@ -694,9 +725,8 @@ The value of Berry phase can be found in the **WT.out**.
 .. _berrycurvcalculation:
 
 Berry curvature calculation
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Calculate Berry curvature at a fixed k plane in 3D BZ. Set BerryCurvature_calc=T, and  set Nk1, Nk2, in NAMELISTS PARAMETERS, set k plane in KPLANE_BULK CARD. Get the plot with  "gnuplot Berrycurvature.gnu”.
-
 
 please set NumOccpuied correctly. It represents the “occpuied” wannier bands, not the total number of electrons. In this application, the Berrycurvature is the summation over NumOccupied bands. 
 
@@ -704,7 +734,8 @@ please set NumOccpuied correctly. It represents the “occpuied” wannier bands
 .. _wanniercentercalculation:
 
 Wannier charge center/Wilson loop calculation
----------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Wannier charge center, which is sometimes called Wilson loop can be calculated by set WannierCenter_calc=T and set KPLANE_BULK CARD,  set number of k points for two vectors is Nk1, Nk2 in NAMELISTS PARAMETERS.  Notice: You should notice that the first vector in KPLANE_BULK CARD is the integration direction, this vector should be equal to one primitive reciprocal lattice vector.  If you want to calculate the Z2 number, Please set the second vector to be half of the reciprocal lattice vector. You can get the Wannier charge center  along the second k line. See more details In the paper written by Alexey. Soluyanov (2011). 
 
 .. NOTE::
@@ -714,7 +745,7 @@ Wannier charge center, which is sometimes called Wilson loop can be calculated b
    then set NumOccupied=8. 
 
 Output
-^^^^^^
+--------
 
 Outputs are **wcc.dat** and **wcc.gnu**, the format of **wcc.dat** is::
 
@@ -729,7 +760,8 @@ The second column is the position of the largest gap of WCC. It is used for draw
 From the fourth column to the last column, they are wcc for the occupied bands specified with "NumOccupied". 
 
 Example
-^^^^^^^
+----------
+
 Take Bi2Se3 for example, we calculate the Wilson loop (WCC) at k3=0 plane, where k1, k2, k3 is in unit
 of reciprocal lattice vector.  The you should set the particular inputs like this ::
  
@@ -766,13 +798,13 @@ Here is an example.
 .. _z2bulkcalculation:
 
 Z2 number for 3D bulk materials
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We can get Z2 topological index (v0, v1v2v3) from the z2 calculations of six time reversal invariant planes, i.e. (a) k1=0.0; (b) k1=0.5; (c) k2=0.0; (d) k2=0.5; (e) k3=0.0; (f) k3=0.5;
 Usually, you can call "Wannier charge center calculation for a plane" six times. Here we packed them up to get another function. You can set the input file like the following.
 
 Input
-^^^^^
+-------
 
 The necessary tags that you should set in the wt.in ::
  
@@ -786,7 +818,7 @@ The necessary tags that you should set in the wt.in ::
   /
 
 Output
-^^^^^^
+--------
 
 Outputs are **wanniercenter3D_Z2_1.dat, wanniercenter3D_Z2_2.dat, wanniercenter3D_Z2_3.dat, wanniercenter3D_Z2_4.dat, wanniercenter3D_Z2_5.dat, wanniercenter3D_Z2_6.dat** 
 and **wanniercenter3D_Z2.gnu**. The z2 value can be found in the WT.out by searching "z2 number for 6 planes". 
@@ -811,7 +843,7 @@ For the 2D system, if you set the Z axis as the stack axis, please only take the
 .. _chernbulkcalculation:
 
 Chern number for 3D bulk materials
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 We can get Chern number of six k planes, i.e. k1=0.0; k1=0.5; k2=0.0; k2=0.5; k3=0.0; k3=0.5; where k1, k2, k3 is in fractional units.
 Usually, you can call "Wannier charge center calculation for a plane"  six times. Here we packed them up to get another function. You can set the input file like the following.
@@ -830,7 +862,7 @@ The full closed momentum surface would defined like this ::
 
 
 Input
-^^^^^
+-------
 
 The necessary tags that you should set in the wt.in ::
  
@@ -844,7 +876,7 @@ The necessary tags that you should set in the wt.in ::
   /
 
 Output
-^^^^^^
+--------
 
 Outputs are **wanniercenter3D_Chern.dat** 
 and **wanniercenter3D_Chern.gnu**. The Chern number can be found in the WT.out by searching "Chern number for 6 planes". 
@@ -865,7 +897,7 @@ For the 2D system, if you set the Z axis as the stack axis, please only take the
 .. _landaulevel:
 
 Landau level calculations
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **This functionality is under testing, not released yet. Developed by QSWu and YFGuan**
 
