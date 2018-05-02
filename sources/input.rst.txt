@@ -20,6 +20,7 @@ wt.in
 -  :ref:`projectors`
 -  :ref:`surface`
 -  :ref:`kpathbulk`
+-  :ref:`kpoints3d`
 -  :ref:`kpathslab`
 -  :ref:`kplane_slab`
 -  :ref:`kplane_bulk`
@@ -260,6 +261,10 @@ When you calculate the Fermi surface with BulkFS_calc= T,
 In order to save the storage, WannierTools only writes out 8(16) energy bands around NumOccupied'th band for SOC=0 (SOC=1) system into FS3D.bxsf.
 
 If you don't put any physical meaning into this tag, then it is very easy to understand.
+
+.. image:: images/WannierTools-numoccupied.png
+   :scale: 40 %
+
 
 * SOC :  integer,  Flag for spin-orbital coupling. If SOC=0, it means there is no SOC included in your given tight binding model. if SOC=1 or >0, it means SOC is already included in the tight binding model.  
 * E_FERMI : real-valued,  Fermi level for the given tight binding model.  
@@ -543,6 +548,23 @@ This is the k path for bulk band structure calculation. ::
    G 0.00000 0.00000 0.0000 L 0.50000 0.00000 0.0000
 
 These k points are in unit of the reciprocal lattice constant built by the lattice vector LATTICE CARD. The number of k points is Nk1, which is set in NAMELISTS PARAMETERS. There are no default values for this CARD. So you must set some value in the input file when choosing BulkBand_calc=T.
+
+.. _kpoints3d:
+
+KPOINTS_3D
+""""""""""
+You can calculate the properties on some kpoints you specified in point mode. e.g. the energy bands ::
+   
+   KPOINTS_3D            
+   4              ! number of k points
+   Direct         ! Direct or Cartesian
+   0.00000 0.00000 0.0000  
+   0.00000 0.00000 0.5000
+   0.50000 0.50000 0.0000
+   0.00000 0.00000 0.0000
+
+The number of lines below "Direct" should be the same as the number above "Direct". You could add comments at the end of each line. But you 
+can't add additional comment lines between the formatted lines.
 
 .. _kpathslab:
 
