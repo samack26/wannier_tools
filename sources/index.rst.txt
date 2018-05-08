@@ -55,14 +55,7 @@ Please cite this paper when using WannierTools for your researchs::
 **Correspondence**
 ^^^^^^^^^^^^^^^^^^
 
-Please report bugs to wuquansheng at gmail.com.
-
-**Advertisement**
-^^^^^^^^^^^^^^^^^^
-
-We already developed a tool to symmetrize Wannier tight binding models. It can symmetrize your wannier90_hr.dat which made of 
-s, p, d and f orbitals. However, it is not released and under testing. If you want to use this part, plase contact one of our 
-developers Changming Yue (yuechangming8 at gmail.com). 
+Please report bugs to wuquansheng at gmail.com, or to wanniertools@googlegroups.com
 
 .. image:: wannier_tools-logo-crop.png
    :scale: 20 %
