@@ -191,7 +191,7 @@ Output
 The outputs for this function are **FS3D.bxsf**. 
 You can plot the FS with `xcrysden <http://www.xcrysden.org>`_  run ::
 
-   xcrysden —bxsf FS3D.bxsf
+   xcrysden --bxsf FS3D.bxsf
 
 to get the plot. 
 
@@ -234,6 +234,11 @@ The outputs for this function are **fs.gnu, fs.png**.
    gnuplot fs.gnu
 
 to get the plot. 
+
+
+.. image:: images/wanniertools-fermisurface.png
+   :scale: 60 %
+
 
 .. _doscalculation:
 
