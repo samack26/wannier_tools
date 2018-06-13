@@ -26,8 +26,22 @@ Aiming to investigate topoligical properties of
 
 **Updates**
 ^^^^^^^^^^^^^^^^
+WannierTools V2.3.0
 
-Version V2.2.6
+1. Fixed a bug.
+2. Add Translate_to_WS_calc in the CONTROL namelist. This works for BulkFS_plane_calc.
+
+WannierTools V2.2.9
+1. Fixed several bugs.
+
+2. Added two new functionalities:
+
+a. Calculate the energy levels at given k points in the KPOINTS_3D card. This is called the point mode.
+
+b. Calculate anomalous Hall conductivity (AHC).
+
+
+WannierTools V2.2.6
 
 1. Discard the Miller indicies
 

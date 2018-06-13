@@ -53,8 +53,13 @@
 The excutable binary changes from ‘wann_tools’ to <strong>‘wt.x’</strong></p>
 <p>There are two input files you should prepare <a class="reference internal" href="#wt-in"><span class="std std-ref">wt.in</span></a>
 and  <a class="reference internal" href="#wannier90-dat"><span class="std std-ref">wannier90_hr.dat</span></a></p>
-<div class="section" id="wt-in">
-<span id="id1"></span><h2>1.2.1. wt.in<a class="headerlink" href="#wt-in" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#wt-in"><span class="std std-ref">Main input file wt.in</span></a></li>
+<li><a class="reference internal" href="#phonon"><span class="std std-ref">Special tags for phonon system (under testing)</span></a></li>
+<li><a class="reference internal" href="#wannier90-dat"><span class="std std-ref">Tight-binding model wannier90_hr.dat</span></a></li>
+</ul>
+<div class="section" id="main-input-file-wt-in">
+<span id="wt-in"></span><h2>1.2.1. Main input file wt.in<a class="headerlink" href="#main-input-file-wt-in" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="#basic-parameters"><span class="std std-ref">Basic Parameters</span></a></li>
 <li><a class="reference internal" href="#tbfilenamelist"><span class="std std-ref">TB_FILE</span></a></li>
@@ -73,6 +78,7 @@ and  <a class="reference internal" href="#wannier90-dat"><span class="std std-re
 <li><a class="reference internal" href="#kcube-bulk"><span class="std std-ref">KCUBE_BULK</span></a></li>
 <li><a class="reference internal" href="#effectivemass"><span class="std std-ref">EFFECTIVE_MASS</span></a></li>
 <li><a class="reference internal" href="#wanniercenter"><span class="std std-ref">WANNIER_CENTRES</span></a></li>
+<li><span class="xref std std-ref">translatewscell</span></li>
 </ul>
 <p>Before executing wann_tools, you should cp the wt.in file
 in the directory wannier_tools/example by your own necessary.</p>
@@ -222,7 +228,7 @@ Cartesian
 </pre></div>
 </div>
 <div class="section" id="basic-parameters">
-<span id="id2"></span><h3>Basic Parameters<a class="headerlink" href="#basic-parameters" title="Permalink to this headline">¶</a></h3>
+<span id="id1"></span><h3>Basic Parameters<a class="headerlink" href="#basic-parameters" title="Permalink to this headline">¶</a></h3>
 <p><strong>TB_FILE, LATTICE, ATOM_POSITIONS, PROJECTORS and SURFACE are the necessary basic parameters. They are used by almost all
 functionalities listed in CONTROL namelist.</strong></p>
 </div>
@@ -490,7 +496,26 @@ for bulk system</td>
 in 3D k-plane
 for bulk system</td>
 <td>BerryCurvature.dat,
-BerryCurvature.gnu</td>
+BerryCurvature.gnu
+Berrycurvature-normalized.dat
+Berrycurvature-normalized.gnu</td>
+<td>yes</td>
+</tr>
+<tr class="row-odd"><td>AHC_calc</td>
+<td>Calculate anomalous Hall
+conductivity
+for bulk system</td>
+<td>sigma_ahe.txt
+in unit of (Ohm*cm)^-1</td>
+<td>yes</td>
+</tr>
+<tr class="row-even"><td>FindNodes_calc</td>
+<td>Find touch point between
+the N’th band to the
+(N+1)’th band in 3D BZ
+N=NumOccupied</td>
+<td>Nodes.dat
+Nodes.gnu</td>
 <td>yes</td>
 </tr>
 </tbody>
@@ -560,7 +585,7 @@ not the whole atoms in the unit cell.
 </div>
 </div>
 <div class="section" id="projectors">
-<span id="id3"></span><h4>PROJECTORS<a class="headerlink" href="#projectors" title="Permalink to this headline">¶</a></h4>
+<span id="id2"></span><h4>PROJECTORS<a class="headerlink" href="#projectors" title="Permalink to this headline">¶</a></h4>
 <p>In this card, we set the Wannier projectors for the tight binding.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>PROJECTORS
  3 3 3 3 3          ! number of projectors
@@ -578,7 +603,7 @@ The default order in Wannier90 is “s”, “pz”, “px”, “py”, “dz2�
 <p class="last">If you don’t care about the calculation related to symmetry like mirror chern number. The order or the name is not important. So for the f electrons, please write 7 random orbitals like px or dz2 or what else you want.</p>
 </div>
 <div class="section" id="surface">
-<span id="id4"></span><h5>SURFACE<a class="headerlink" href="#surface" title="Permalink to this headline">¶</a></h5>
+<span id="id3"></span><h5>SURFACE<a class="headerlink" href="#surface" title="Permalink to this headline">¶</a></h5>
 <p><strong>Attention: from version v2.2.6 on, you can specify a surface with SURFACE card with only two lattice vectors</strong>.</p>
 </div>
 </div>
@@ -657,7 +682,7 @@ G 0.0 0.0 M 0.5 0.5
 <p>including the  band structure calculation and the surface state calculation. It is necessary to set it when SlabBand_calc=T or SlabSS_calc=T.  Number of k points along the line is Nk1.</p>
 </div>
 <div class="section" id="kplane-slab">
-<span id="id5"></span><h4>KPLANE_SLAB<a class="headerlink" href="#kplane-slab" title="Permalink to this headline">¶</a></h4>
+<span id="id4"></span><h4>KPLANE_SLAB<a class="headerlink" href="#kplane-slab" title="Permalink to this headline">¶</a></h4>
 <p>Define a 2D k space plane for arc plots.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>KPLANE_SLAB
 -0.1 -0.1      ! Original point for 2D k plane
@@ -675,7 +700,7 @@ G 0.0 0.0 M 0.5 0.5
 <a class="reference internal image-reference" href="images/wanniertools-kplane-slab.png"><img alt="images/wanniertools-kplane-slab.png" src="images/wanniertools-kplane-slab.png" style="width: 768.0px; height: 432.0px;" /></a>
 </div>
 <div class="section" id="kplane-bulk">
-<span id="id6"></span><h4>KPLANE_BULK<a class="headerlink" href="#kplane-bulk" title="Permalink to this headline">¶</a></h4>
+<span id="id5"></span><h4>KPLANE_BULK<a class="headerlink" href="#kplane-bulk" title="Permalink to this headline">¶</a></h4>
 <p>The same set as KPLANE_SLAB CARD, but for 3D case.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>KPLANE_BULK
 -0.50 -0.50  0.00   ! Original point for 3D k plane
@@ -693,7 +718,7 @@ G 0.0 0.0 M 0.5 0.5
 <a class="reference internal image-reference" href="images/wanniertools-kplane-bulk.png"><img alt="images/wanniertools-kplane-bulk.png" src="images/wanniertools-kplane-bulk.png" style="width: 768.0px; height: 432.0px;" /></a>
 </div>
 <div class="section" id="kcube-bulk">
-<span id="id7"></span><h4>KCUBE_BULK<a class="headerlink" href="#kcube-bulk" title="Permalink to this headline">¶</a></h4>
+<span id="id6"></span><h4>KCUBE_BULK<a class="headerlink" href="#kcube-bulk" title="Permalink to this headline">¶</a></h4>
 <p>The same set as KPLANE_BULK CARD</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>KCUBE_BULK
 -0.50 -0.50 -0.50   ! Original point for 3D k plane
@@ -757,8 +782,49 @@ The default values for this card are atomic positions.</p>
 </div>
 </div>
 </div>
-<div class="section" id="wannier90-hr-dat">
-<span id="wannier90-dat"></span><h2>1.2.2. wannier90_hr.dat<a class="headerlink" href="#wannier90-hr-dat" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="special-tags-for-phonon-system-under-testing">
+<span id="phonon"></span><h2>1.2.2. Special tags for phonon system (under testing)<a class="headerlink" href="#special-tags-for-phonon-system-under-testing" title="Permalink to this headline">¶</a></h2>
+<p>Now we have one testing version of phonon system, you can write to <a class="reference external" href="mailto:wuquansheng&#37;&#52;&#48;gmail&#46;com">wuquansheng<span>&#64;</span>gmail<span>&#46;</span>com</a> for testing.
+There are two steps for using WannierTools for phonon system.</p>
+<p>1. Use phonon_hr.py to get the tight-binding Hamiltonian from the FORCE_CONSTANTS or FORCE_SETS which generated with <a class="reference external" href="https://atztogo.github.io/phonopy/">phonopy</a>.
+This part was written by Changming Yue (yuechangming8 at gmail.com). You can write email to him to get the source.
+By default the hrfile name of the Hamiltonian is phonopyTB_hr.dat. You can change the name of it as whatever you want.</p>
+<p>2. After the generation of hrfile. You need another wt.in file as the same as the electron system. One difference is that
+you need to specify <strong>Particle = ‘phonon’</strong> in the <strong>TB_FILE</strong> namelist like</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&amp;</span><span class="n">TB_FILE</span>
+<span class="n">Hrfile</span> <span class="o">=</span> <span class="s1">&#39;phonopyTB_hr.dat&#39;</span>
+<span class="n">Particle</span> <span class="o">=</span> <span class="s1">&#39;phonon&#39;</span>
+<span class="o">/</span>
+</pre></div>
+</div>
+<div class="section" id="lo-to-splitting">
+<span id="loto"></span><h3>LO-TO splitting<a class="headerlink" href="#lo-to-splitting" title="Permalink to this headline">¶</a></h3>
+<p>The LO-TO splitting can be treated as a pertubation <a class="reference external" href="https://atztogo.github.io/phonopy/setting-tags.html#nac-tag">see phonopy</a>.</p>
+<p>We need the following necessary CARDs in the <strong>wt.in</strong>. Take <a class="reference external" href="https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.120.016401">FeSi</a> as an example</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>ATOM_MASS
+2  ! number of types of atom, for FeSi, we have 2
+4 4  ! number of atoms for each atom-type Fe4Si4
+55.845 28.0855 ! atomic mass for each type of atom
+
+LOTO_DT        ! Dielectric constant tensor
+199.480 0 0
+0 199.480 0
+0 0 199.480
+
+LOTO_BC   ! Born charge tensor for each type of atom
+-4.3431500   0.6899200  -0.4140700
+-0.4140800  -4.3431600   0.6899300
+0.6898900  -0.4140600  -4.3431500
+4.3909800   0.2300200  -0.1092900
+-0.1093100   4.3909900   0.2300100
+0.2300400  -0.1092800   4.3909800
+</pre></div>
+</div>
+<p>LOTO_DT is a 3*3 matrix. LOTO_BC are Number-of-atom-types 3*3 matrices.</p>
+</div>
+</div>
+<div class="section" id="tight-binding-model-wannier90-hr-dat">
+<span id="wannier90-dat"></span><h2>1.2.3. Tight-binding model wannier90_hr.dat<a class="headerlink" href="#tight-binding-model-wannier90-hr-dat" title="Permalink to this headline">¶</a></h2>
 <p>This file contains the TB parameters. Usually, it can be generated by <a class="reference external" href="http://wannier.org">Wannier90</a>.</p>
 <p>Of cource, you can generate it from the Slater-Koster method or discretize k.p model onto a cubic lattice.
 The format should like this</p>
@@ -846,7 +912,7 @@ The 4th and 5th column are the band index (Row first). The 6th and 7th are compl
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">1.2. Introduction of input files</a><ul>
-<li><a class="reference internal" href="#wt-in">1.2.1. wt.in</a><ul>
+<li><a class="reference internal" href="#main-input-file-wt-in">1.2.1. Main input file wt.in</a><ul>
 <li><a class="reference internal" href="#basic-parameters">Basic Parameters</a></li>
 <li><a class="reference internal" href="#namelists">NAMELISTS</a><ul>
 <li><a class="reference internal" href="#tb-file">TB_FILE</a></li>
@@ -876,7 +942,11 @@ The 4th and 5th column are the band index (Row first). The 6th and 7th are compl
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#wannier90-hr-dat">1.2.2. wannier90_hr.dat</a></li>
+<li><a class="reference internal" href="#special-tags-for-phonon-system-under-testing">1.2.2. Special tags for phonon system (under testing)</a><ul>
+<li><a class="reference internal" href="#lo-to-splitting">LO-TO splitting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tight-binding-model-wannier90-hr-dat">1.2.3. Tight-binding model wannier90_hr.dat</a></li>
 </ul>
 </li>
 </ul>
