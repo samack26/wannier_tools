@@ -350,7 +350,7 @@ Typical input parameters for BulkGap_cube calculation ::
    0.00  1.00  0.00   ! The 2nd vector to define 3d k cube
    0.00  0.00  1.00   ! The 3rd vector to define 3d k cube
 
-See :ref:`controlnamelist`, :ref:`parametersnamelist`, :ref:`kcubebulk`
+See :ref:`controlnamelist`, :ref:`parametersnamelist`, :ref:`kcube_bulk`
 
 Output
 >>>>>>>
