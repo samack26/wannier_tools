@@ -26,6 +26,11 @@ Aiming to investigate topoligical properties of
 
 **Updates**
 ^^^^^^^^^^^^^^^^
+Develop branch 2018 June 27
+We added the test version of phonon system. Welcome to git clone the develop branch and test it.
+git clone https://github.com/quanshengwu/wannier_tools.git
+
+
 WannierTools V2.3.0
 
 1. Fixed a bug.
