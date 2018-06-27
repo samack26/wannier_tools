@@ -33,7 +33,6 @@ Main input file wt.in
 -  :ref:`kcube_bulk`
 -  :ref:`effectivemass`
 -  :ref:`wanniercenter`
--  :ref:`translatewscell`
 
 Before executing wann_tools, you should cp the wt.in file 
 in the directory wannier_tools/example by your own necessary.   
